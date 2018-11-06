@@ -249,11 +249,20 @@ class DouyinTool(object):
         '''
         author_name = video['author'].get("nickname")
         author_uid = video['author'].get('uid')
+        short_id = video['author'].get("short_id")
+        unique_id = video['author'].get("unique_id")
+        
         video_desc = video.get('desc')
         # music_id = video['music']['play_url'].get('uri')
         aweme_id = video.get("aweme_id")
 
-        file_name = "_".join([author_name, trim(video_desc, 20, '')])
+        #file_name = "_".join([author_name, trim(video_desc, 20, '')])
+        #修改为已短id+更改后的抖音号(如果有)+视频描述：short_id+unique_id
+        if unique_id=='':
+          file_name = "_".join([short_id,author_name, trim(video_desc, 20, '')])
+        else :
+        	file_name = "_".join([short_id,unique_id,author_name, trim(video_desc, 20, '')])
+        
         name = f"{file_name}.mp4"
         if repeat_func and repeat_func(name):
             video_url = music_url = None # 用于下载器的去重复处理回调函数，当文件已经存在时不用再获取视频地址了，无需下载
@@ -265,6 +274,8 @@ class DouyinTool(object):
             "author_name": author_name,
             "video_desc": video_desc,
             "author_uid": author_uid,
+            "short_id"  : short_id,
+            "unique_id" : unique_id,
             # "music_id": music_id,
             "aweme_id" : aweme_id,
             "video_url" : video_url,
