@@ -251,17 +251,16 @@ class DouyinTool(object):
         author_uid = video['author'].get('uid')
         short_id = video['author'].get("short_id")
         unique_id = video['author'].get("unique_id")
-        
         video_desc = video.get('desc')
         # music_id = video['music']['play_url'].get('uri')
         aweme_id = video.get("aweme_id")
 
         #file_name = "_".join([author_name, trim(video_desc, 20, '')])
-        #修改为已短id+更改后的抖音号(如果有)+视频描述：short_id+unique_id
+        #修改文件名为：短id（初始抖音号）+更改后的抖音号(如果有)+昵称+20字视频描述
         if unique_id=='':
           file_name = "_".join([short_id,author_name, trim(video_desc, 20, '')])
         else :
-        	file_name = "_".join([short_id,unique_id,author_name, trim(video_desc, 20, '')])
+          file_name = "_".join([short_id,unique_id,author_name, trim(video_desc, 20, '')])
         
         name = f"{file_name}.mp4"
         if repeat_func and repeat_func(name):
